@@ -1,3 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
+const rulesDirPlugin = require("eslint-plugin-rulesdir");
+rulesDirPlugin.RULES_DIR = "rules";
+
+// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
@@ -10,6 +15,8 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint"],
-  rules: {},
+  plugins: ["rulesdir"],
+  rules: {
+    "rulesdir/kimahri-not-pass": "error",
+  },
 };

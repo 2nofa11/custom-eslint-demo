@@ -18,5 +18,8 @@
   "scripts": {
     "test": "jest",
     "build:eslint": "yarn tsc"
+  },
+  "dependencies": {
+    "eslint-plugin-rulesdir": "^0.2.2"
   }
 }
