@@ -1,11 +1,6 @@
 import { Rule } from "eslint";
-import {
-  MemberExpression,
-  Expression,
-  Super,
-  Identifier,
-  PrivateIdentifier,
-} from "estree";
+import { MemberExpression } from "estree";
+
 const rule: Rule.RuleModule = {
   meta: {
     type: "problem",
@@ -21,7 +16,31 @@ const rule: Rule.RuleModule = {
     },
   },
   create(context: Rule.RuleContext) {
-    return {};
+    return {
+      MemberExpression(node: MemberExpression & Rule.NodeParentExtension) {
+        const sourceNode = node.object;
+        if (sourceNode.type !== "MemberExpression") return;
+
+        const sourceObject = sourceNode.object;
+        const sourceProperty = sourceNode.property;
+        const targetProperty = node.property;
+
+        if (sourceObject.type !== "Identifier") return;
+        if (sourceProperty.type !== "Identifier") return;
+        if (targetProperty.type !== "Identifier") return;
+
+        if (
+          sourceObject.name === "process" &&
+          sourceProperty.name === "env" &&
+          targetProperty.name === "NODE_ENV"
+        ) {
+          context.report({
+            node,
+            messageId: "unexpectedProcessEnvNodeEnv",
+          });
+        }
+      },
+    };
   },
 };
 
