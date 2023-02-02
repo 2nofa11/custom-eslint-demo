@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ["rulesdir"],
   rules: {
+    "rulesdir/no-process-node-env": "error",
     "rulesdir/kimahri-not-pass": "error",
   },
 };
