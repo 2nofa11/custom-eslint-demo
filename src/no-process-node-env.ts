@@ -1,7 +1,7 @@
 import { Rule } from "eslint";
 import { MemberExpression } from "estree";
 
-const rule: Rule.RuleModule = {
+export const rule: Rule.RuleModule = {
   meta: {
     type: "problem",
     hasSuggestions: true,
@@ -43,5 +43,3 @@ const rule: Rule.RuleModule = {
     };
   },
 };
-
-module.exports = rule;
