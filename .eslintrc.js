@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
 const rulesDirPlugin = require("eslint-plugin-rulesdir");
-rulesDirPlugin.RULES_DIR = "rules";
+rulesDirPlugin.RULES_DIR = "rules/eslint";
 
 // eslint-disable-next-line no-undef
 module.exports = {
