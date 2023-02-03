@@ -1,35 +1,35 @@
 module.exports = {
   meta: {
-    type: "problem",
-    hasSuggestions: true,
-    docs: {
-      description: "許可されていない",
-      suggestion: true,
-    },
     messages: {
-      unexpectedProcessEnvNodeEnv:
-        "process.env.NODE_ENVは許可されていません。myNodeEnv() を利用してください。",
-      replaceToNodeEnv: "myNodeEnv() に置き換える。",
+      unexpectedProcessEnvNodeEnv: "params",
+      unexpectedProcessEnvNodeQuery: "Query",
     },
   },
   create: function (context) {
     return {
       MemberExpression: function (node) {
-        var sourceNode = node.object;
+        const sourceNode = node.object;
         if (sourceNode.type !== "MemberExpression") return;
-        var sourceObject = sourceNode.object;
-        var sourceProperty = sourceNode.property;
-        var targetProperty = node.property;
+        const sourceObject = sourceNode.object;
+        const sourceProperty = sourceNode.property;
+        const targetProperty = node.property;
+        // 1文字目がThis以外は早期リターン
         if (sourceObject.type !== "ThisExpression") return;
+        // 2文字目が$route以外は早期リターン
         if (sourceProperty.type !== "Identifier") return;
+        if (sourceProperty.name !== "$route") return;
+        // 3文字目がエラーを出す文字かを判定
         if (targetProperty.type !== "Identifier") return;
-        if (
-          sourceProperty.name === "$route" &&
-          targetProperty.name === "params"
-        ) {
+        if (targetProperty.name === "params") {
           context.report({
             node: node,
             messageId: "unexpectedProcessEnvNodeEnv",
+          });
+        }
+        if (targetProperty.name === "query") {
+          context.report({
+            node: node,
+            messageId: "unexpectedProcessEnvNodeQuery",
           });
         }
       },
