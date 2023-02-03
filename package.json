@@ -20,6 +20,7 @@
     "build:eslint": "yarn tsc"
   },
   "dependencies": {
-    "eslint-plugin-rulesdir": "^0.2.2"
+    "eslint-plugin-rulesdir": "^0.2.2",
+    "vue-router": "^4.1.6"
   }
 }

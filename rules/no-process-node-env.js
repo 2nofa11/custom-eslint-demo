@@ -20,13 +20,12 @@ module.exports = {
         var sourceObject = sourceNode.object;
         var sourceProperty = sourceNode.property;
         var targetProperty = node.property;
-        if (sourceObject.type !== "Identifier") return;
+        if (sourceObject.type !== "ThisExpression") return;
         if (sourceProperty.type !== "Identifier") return;
         if (targetProperty.type !== "Identifier") return;
         if (
-          sourceObject.name === "process" &&
-          sourceProperty.name === "env" &&
-          targetProperty.name === "NODE_ENV"
+          sourceProperty.name === "$route" &&
+          targetProperty.name === "params"
         ) {
           context.report({
             node: node,
